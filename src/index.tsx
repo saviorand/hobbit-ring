@@ -259,10 +259,15 @@ const shops = [
 
 
 
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  engine: {
+    apiKey: "service:grecha:T7Nv_-x6La-zJvW_z34sRA",
+    schemaTag: 'development',
+  }
+});
 
-
-const server = new ApolloServer({ typeDefs, resolvers });
-
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${ url }`);
 });
