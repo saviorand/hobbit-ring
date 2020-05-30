@@ -1,3 +1,7 @@
+const { extname } = require('path');
+const { v4: uuid } = require('uuid'); 
+const s3 = require('./s3'); 
+
 module.exports = {
   Query: {
     shops: () => shops,
@@ -28,12 +32,18 @@ module.exports = {
     uploadXML: async (_, { file }) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
 
+      const { Location } = await s3.upload({ // (C)
+        Body: createReadStream(),               
+        Key: `${uuid()}${extname(filename)}`,  
+        ContentType: mimetype                   
+      }).promise();                             
+
       return {
         filename,
         mimetype,
         encoding,
-        uri: 'http://about:blank',
-      };
+        uri: Location, 
+      }; 
     },
   },
 };
