@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 module.exports = {
   s3: {
     credentials: {
