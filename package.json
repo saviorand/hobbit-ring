@@ -1,20 +1,18 @@
 {
-  "name": "hobbit-ring",
+  "name": "hobbit-ring-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.tsx"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.12.0",
-    "graphql": "^14.3.1"
-  },
-  "devDependencies": {
-    "apollo": "^2.27.4"
+    "apollo-server": "^2.14.1",
+    "aws-sdk": "^2.686.0",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.0.0",
+    "uuid": "^8.1.0"
   }
 }
