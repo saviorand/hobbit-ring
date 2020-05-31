@@ -33,6 +33,7 @@ module.exports = {
       const { createReadStream, filename, mimetype, encoding } = await file;
 
       const { Location } = await s3.upload({ // (C)
+        Bucket: 'grecha-assets',
         Body: createReadStream(),               
         Key: `${uuid()}${extname(filename)}`,  
         ContentType: mimetype                   
