@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   type File {
@@ -65,6 +65,7 @@ module.exports = gql`
   }
 
   type Mutation {
+    login(email: String!, password: String!): String
     uploadXML(file: Upload!): File
   }
 `;
