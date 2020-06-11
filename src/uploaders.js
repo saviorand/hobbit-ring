@@ -3,7 +3,7 @@ const config = require('./config');
 const {
   S3Uploader,
   FilesystemUploader,
-} = require('./lib/gql-uploaders');
+} = require('./lib/regular-uploaders');
 
 const xmlUploader = new S3Uploader(s3, {
   baseKey: 'uploads',

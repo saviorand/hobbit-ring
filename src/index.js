@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const server = require('./server');
+const gql = require('graphql-tag');
 const users = require('./data');
+const fileUpload = require('express-fileupload');
+//const cors = require('cors');
+//const https = require('https');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
+const { xmlUploader } = require('./uploaders');
+//import { createWriteStream } from 'fs';
 const jwt = require('jsonwebtoken');
+
 
 server.applyMiddleware({ app });
 
@@ -12,10 +19,63 @@ app.listen({ port: process.env.PORT || 4000 }, () => {
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}${server.graphqlPath}`);
 });
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+async function UploadXML (file) {
+            const { data, name, mimetype, size } = await file;
+
+            const uri = await xmlUploader.upload({
+             data,
+             name,
+             mimetype,
+            });                           
+
+            return {
+             name,
+             mimetype,
+             encoding,
+             uri, 
+             }; 
+            };
+
+app.post('/upload', async (req, res) => {
+    try {
+        if(!req.files) {
+        	console.log(req.headers)
+            res.send({
+                status: false,
+                message: 'Hi'
+            });
+        } else {
+            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+           let incomingFile = req.files.file;
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            //avatar.mv('./uploads/' + incomingFile.name);
+            
+            
+           UploadXML(incomingFile)
+
+            //send response
+            res.send({
+                status: true,
+                message: 'File is uploaded',
+                data: {
+                    name: incomingFile.name,
+                    mimetype: incomingFile.mimetype,
+                    size: incomingFile.size
+                }
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 
 app.get('/', (req, res) => res.send('Hello World!'));
-
 
 app.post('/get-token', async (req, res) => {
     const { email, password } = req.body
@@ -46,4 +106,5 @@ app.post('/get-token', async (req, res) => {
             message: `Could not find account: ${email}`,
         })
     }
-    })
+    });
+
