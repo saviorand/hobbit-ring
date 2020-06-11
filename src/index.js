@@ -37,7 +37,6 @@ async function UploadXML (file) {
             return {
              name,
              mimetype,
-             encoding,
              uri, 
              }; 
             };
