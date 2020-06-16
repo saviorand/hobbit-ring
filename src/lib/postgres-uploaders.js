@@ -1,11 +1,11 @@
-const { Pool } = require('pg');
+const { Client } = require('pg');
 
-const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.DATABASE_URL,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 module.exports = {
-  query: (text, params) => pool.query(text, params),
+  query: (text, params) => client.query(text, params),
 }
