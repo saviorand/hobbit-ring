@@ -89,9 +89,7 @@ app.post('/save_number', async (req, res) => {
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
             //avatar.mv('./uploads/' + incomingFile.name);
             try {
-            	await db.connect()
             	const result = await db.query('INSERT INTO contacts (phone_number) VALUES ($1)', [incomingPhone]);
-                await client.end()
                 res.send('Records created successfully')
             } catch (err) {
             	res.status(500).send(err);
