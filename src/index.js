@@ -1,9 +1,11 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const server = require('./server');
 const gql = require('graphql-tag');
 const users = require('./data');
 const fileUpload = require('express-fileupload');
+const db = require('./lib/postgres-uploaders');
 //const cors = require('cors');
 //const https = require('https');
 const bcrypt = require('bcrypt');
@@ -69,6 +71,30 @@ app.post('/upload', async (req, res) => {
                 }
             });
         }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.post('/save_number', async (req, res) => {
+    try {
+        if(!req.body.phone) {
+            res.send({
+                status: false,
+                message: 'Nope'
+            });
+        } else {
+            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+           let incomingPhone = req.body.phone;
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            //avatar.mv('./uploads/' + incomingFile.name);
+            try {
+            	const result = await db.query('INSERT INTO contacts (phone_number) VALUES ($1)', [incomingPhone]);
+                res.send('Records created successfully')
+            } catch (err) {
+            	res.status(500).send(err);
+            }
+          }
     } catch (err) {
         res.status(500).send(err);
     }
