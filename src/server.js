@@ -1,7 +1,19 @@
 const { ApolloServer, gql, AuthenticationError } = require('apollo-server-express');
 const typeDefs = require('./typedefs');
 const resolvers = require('./resolvers');
+const MyDatabase = require("./dbqueries");
 const jwt = require('jsonwebtoken');
+
+const knexConfig = {
+  client: "pg",
+  connection: {
+      connectionString: process.env.DATABASE_URL,
+    /* CONNECTION INFO */
+  }
+};
+
+const db = new MyDatabase(knexConfig);
+
 
 module.exports = new ApolloServer({
   typeDefs,
@@ -18,8 +30,9 @@ module.exports = new ApolloServer({
     }
 
   },
+  dataSources: () => ({ db }),
   engine: {
     apiKey: "service:grecha:T7Nv_-x6La-zJvW_z34sRA",
-    schemaTag: 'development',
+    graphVariant: 'development',
   }
 });

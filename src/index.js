@@ -1,19 +1,21 @@
 const express = require('express');
 require('dotenv').config();
 const app = express();
+const bodyParser = require('body-parser');
 const server = require('./server');
 const gql = require('graphql-tag');
-const users = require('./data');
-const fileUpload = require('express-fileupload');
-const db = require('./lib/postgres-uploaders');
-//const cors = require('cors');
-//const https = require('https');
-const bcrypt = require('bcrypt');
-const bodyParser = require('body-parser');
+
 const { xmlUploader } = require('./uploaders');
-//import { createWriteStream } from 'fs';
+const fileUpload = require('express-fileupload');
+
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+//const users = require('./data');
+//const db = require('./lib/postgres-uploaders');
+//const cors = require('cors');
+//const https = require('https');
+//import { createWriteStream } from 'fs';
 
 server.applyMiddleware({ app });
 
@@ -76,6 +78,7 @@ app.post('/upload', async (req, res) => {
     }
 });
 
+/*
 app.post('/save_number', async (req, res) => {
     try {
         if(!req.body.phone) {
@@ -133,3 +136,4 @@ app.post('/get-token', async (req, res) => {
     }
     });
 
+*/

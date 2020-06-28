@@ -58,8 +58,8 @@ module.exports = gql`
     shop(shopId: ID!): Shop
     categories(categoryIds: [ID]!): [Category]
     category(categoryId: ID!): Category
-    categoryContents(contentIds: [ID]!): [CategoryPreview]
-    categoryContent(contentId: ID!): CategoryPreview
+    categoryPreviews(categoryPreviewIds: [ID]!): [CategoryPreview]
+    categoryPreview(categoryPreviewId: ID!): CategoryPreview
     productItems(productIds: [ID]!): [ProductItem]
     productItem(productId: ID!): ProductItem
   }
